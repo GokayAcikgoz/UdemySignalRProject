@@ -1,0 +1,45 @@
+﻿@model SignalRWebUI.Dtos.DiscountDtos.UpdateDiscountDto
+@{
+    ViewData["Title"] = "UpdateDiscount";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+	<div class="container-fluid">
+		<h4 class="page-title">İndirimli Ürün İşlemleri</h4>
+		<div class="row">
+			<div class="col-md-12">
+				<form method="post">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-title">Yeni İndirimli Ürün Girişi</div>
+						</div>
+						<input type="hidden" asp-for="DiscountID"/>
+						<div class="card-body">
+							<div class="form-group">
+								<label for="Title">Ürün Adını Giriniz</label>
+								<input type="text" class="form-control" id="Title" asp-for="Title">
+							</div>
+							<div class="form-group">
+								<label for="Amount">Ürün İndirim Oranını Giriniz</label>
+								<input type="text" class="form-control" id="Amount" asp-for="Amount">
+							</div>
+							<div class="form-group">
+								<label for="ImageUrl">Görselin Url'ini' Giriniz</label>
+								<input type="text" class="form-control" id="ImageUrl" asp-for="ImageUrl">
+							</div>
+							<div class="form-group">
+								<label for="Description">Açıklamayı Giriniz</label>
+								<input type="text" class="form-control" id="Description" asp-for="Description">
+							</div>
+						</div>
+						<div class="card-action">
+							<button class="btn btn-primary">İndirimli Ürünü Güncelle</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
