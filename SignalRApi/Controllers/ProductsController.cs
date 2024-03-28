@@ -28,15 +28,57 @@ namespace SignalRApi.Controllers
             return Ok(value);
         }
 
+		[HttpGet("ProductCount")]
+		public IActionResult ProductCount()
+		{
+			return Ok(_productService.TProductCount());
+		}
 
-        [HttpGet("ProductListWithCategory")]
+		[HttpGet("ProductCountByCategoryNameDrink")]
+        public IActionResult ProductCountByCategoryNameDrink()
+        {
+            return Ok(_productService.TProductCountByCategoryNameDrink());
+        }
+
+		[HttpGet("ProductCountByCategoryNameHamburger")]
+		public IActionResult ProductCountByCategoryNameHamburger()
+		{
+			return Ok(_productService.TProductCountByCategoryNameHamburger());
+		}
+
+		[HttpGet("ProductPriceAvg")]
+		public IActionResult ProductPriceAvg()
+		{
+			return Ok(_productService.TProductPriceAvg());
+		}
+
+		[HttpGet("ProductNameByMaxPrice")]
+		public IActionResult ProductNameByMaxPrice()
+		{
+			return Ok(_productService.TProductNameByMaxPrice());
+		}
+
+		[HttpGet("ProductNameByMinPrice")]
+		public IActionResult ProductNameByMinPrice()
+		{
+			return Ok(_productService.TProductNameByMinPrice());
+		}
+
+
+		[HttpGet("ProductListWithCategory")]
         public IActionResult ProductListWithCategory()
         {
             var value = _mapper.Map<List<ResultProductWithCategory>>(_productService.TGetProductsWithCategories());
             return Ok(value);
         }
 
-        [HttpPost]
+		[HttpGet("ProductAvgPriceByHamburger")]
+		public IActionResult ProductAvgPriceByHamburger()
+		{
+			return Ok(_productService.TProductAvgPriceByHamburger());
+		}
+
+		[HttpPost]
         public IActionResult CreateProduct(CreateProductDto createProductDto)
         {
             //_contactService.TAdd(new Contact()

@@ -27,7 +27,25 @@ namespace SignalRApi.Controllers
             return Ok(value);
         }
 
-        [HttpPost]
+        [HttpGet("CategoryCount")]
+        public IActionResult CategoryCount()
+        {
+            return Ok(_categoryService.TCategoryCount());
+        }
+
+		[HttpGet("ActiveCategoryCount")]
+		public IActionResult ActiveCategoryCount()
+		{
+			return Ok(_categoryService.TActiveCategoryCount());
+		}
+
+		[HttpGet("PassiveCategoryCount")]
+		public IActionResult PassiveCategoryCount()
+		{
+			return Ok(_categoryService.TPassiveCategoryCount());
+		}
+
+		[HttpPost]
         public IActionResult CreateCategory(CreateCategoryDto createCategoryDto)
         {
             //_categoryService.TAdd(new Category()
@@ -64,7 +82,7 @@ namespace SignalRApi.Controllers
             //    CategoryStatus = true
             //});
             _categoryService.TUpdate(_mapper.Map<Category>(updateCategoryDto));
-            return Ok("Kategori eklendi");
+            return Ok("Kategori Güncellendi");
         }
     }
 }

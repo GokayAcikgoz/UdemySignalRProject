@@ -2,6 +2,8 @@ using SignalR.BusinessLayer.Abstract;
 using SignalR.BusinessLayer.Concrete;
 using SignalR.DataAccessLayer.Abstract;
 using SignalR.DataAccessLayer.Concrete;
+using SignalR.DataAccessLayer.Dapper.Abstract;
+using SignalR.DataAccessLayer.Dapper.Concrete;
 using SignalR.DataAccessLayer.EntityFramework;
 using SignalR.DataAccessLayer.UnitOfWork;
 using SignalRApi.Hubs;
@@ -48,6 +50,22 @@ builder.Services.AddScoped<ISocialMediaService, SocialMediaManager>();
 builder.Services.AddScoped<ISocialMediaDal, EfSocialMediaDal>();
 builder.Services.AddScoped<ITestimonialService, TestimonialManager>();
 builder.Services.AddScoped<ITestimonialDal, EfTestimonialDal>();
+builder.Services.AddScoped<IOrderService, OrderManager>();
+builder.Services.AddScoped<IOrderDal, EfOrderDal>();
+builder.Services.AddScoped<IOrderDetailService, OrderDetailManager>();
+builder.Services.AddScoped<IOrderDetailDal, EfOrderDetailDal>();
+builder.Services.AddScoped<IMoneyCaseService, MoneyCaseManager>();
+builder.Services.AddScoped<IMoneyCaseDal, EfMoneyCaseDal>();
+builder.Services.AddScoped<IMenuTableDal, EfMenuTableDal>();
+builder.Services.AddScoped<IMenuTableService, MenuTableManager>();
+builder.Services.AddScoped<ISliderDal, EfSliderDal>();
+builder.Services.AddScoped<ISliderService, SliderManager>();
+
+builder.Services.AddScoped<ICategoryDapperRepository, CategoryDapperManager>();
+builder.Services.AddScoped<IProductDapperRepository, ProductDapperManager>();
+builder.Services.AddScoped<IOrderDapperRepository, OrderDapperManager>();
+builder.Services.AddScoped<IMoneyCaseDapperRepository, MoneyCaseDapperManager>();
+builder.Services.AddScoped<IMenuTableDapperRepository, MenuTableDapperManager>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

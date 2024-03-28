@@ -1,5 +1,6 @@
 ﻿using SignalR.BusinessLayer.Abstract;
 using SignalR.DataAccessLayer.Abstract;
+using SignalR.DataAccessLayer.Dapper.Abstract;
 using SignalR.DataAccessLayer.UnitOfWork;
 using SignalR.EntityLayer.Entities;
 using System;
@@ -14,20 +15,32 @@ namespace SignalR.BusinessLayer.Concrete
     {
         private readonly ICategoryDal _categoryDal;
         private readonly IUoWDal _uoWDal;
+        private readonly ICategoryDapperRepository _categoryDapperRepository;
 
-        public CategoryManager(ICategoryDal categoryDal, IUoWDal uoWDal)
-        {
-            _categoryDal = categoryDal;
-            _uoWDal = uoWDal;
-        }
+		public CategoryManager(ICategoryDal categoryDal, IUoWDal uoWDal, ICategoryDapperRepository categoryDapperRepository)
+		{
+			_categoryDal = categoryDal;
+			_uoWDal = uoWDal;
+			_categoryDapperRepository = categoryDapperRepository;
+		}
 
-        public void TAdd(Category entity)
+		public int TActiveCategoryCount()
+		{
+			return _categoryDapperRepository.ActiveCategoryCount();
+		}
+
+		public void TAdd(Category entity)
         {
             _categoryDal.Add(entity);
             _uoWDal.Save();
         }
 
-        public void TDelete(Category entity)
+		public int TCategoryCount()
+		{
+            return _categoryDapperRepository.CategoryCount();
+		}
+
+		public void TDelete(Category entity)
         {
             _categoryDal.Delete(entity);
             _uoWDal.Save();
@@ -43,7 +56,12 @@ namespace SignalR.BusinessLayer.Concrete
             return _categoryDal.GetListAll();
         }
 
-        public void TUpdate(Category entity)
+		public int TPassiveCategoryCount()
+		{
+			return _categoryDapperRepository.PassiveCategoryCount();
+		}
+
+		public void TUpdate(Category entity)
         {
             _categoryDal.Update(entity);
             _uoWDal.Save();

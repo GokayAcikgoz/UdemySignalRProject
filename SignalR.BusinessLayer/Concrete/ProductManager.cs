@@ -1,5 +1,6 @@
 ﻿using SignalR.BusinessLayer.Abstract;
 using SignalR.DataAccessLayer.Abstract;
+using SignalR.DataAccessLayer.Dapper.Abstract;
 using SignalR.DataAccessLayer.UnitOfWork;
 using SignalR.EntityLayer.Entities;
 using System;
@@ -14,14 +15,16 @@ namespace SignalR.BusinessLayer.Concrete
     {
         private readonly IProductDal _productDal;
         private readonly IUoWDal _uowDal;
+        private readonly IProductDapperRepository _productDapperRepository;
 
-        public ProductManager(IProductDal productDal, IUoWDal uowDal)
-        {
-            _productDal = productDal;
-            _uowDal = uowDal;
-        }
+		public ProductManager(IProductDal productDal, IUoWDal uowDal, IProductDapperRepository productDapperRepository)
+		{
+			_productDal = productDal;
+			_uowDal = uowDal;
+			_productDapperRepository = productDapperRepository;
+		}
 
-        public void TAdd(Product entity)
+		public void TAdd(Product entity)
         {
             _productDal.Add(entity);
             _uowDal.Save();
@@ -48,7 +51,42 @@ namespace SignalR.BusinessLayer.Concrete
             return _productDal.GetProductsWithCategories();
         }
 
-        public void TUpdate(Product entity)
+		public int TProductCount()
+		{
+			return _productDapperRepository.ProductCount();
+		}
+
+		public int TProductCountByCategoryNameDrink()
+		{
+			return _productDapperRepository.ProductCountByCategoryNameDrink();
+		}
+
+		public int TProductCountByCategoryNameHamburger()
+		{
+			return _productDapperRepository.ProductCountByCategoryNameHamburger();
+		}
+
+		public string TProductNameByMaxPrice()
+		{
+			return _productDapperRepository.ProductNameByMaxPrice();
+		}
+
+		public string TProductNameByMinPrice()
+		{
+			return _productDapperRepository.ProductNameByMinPrice();
+		}
+
+		public decimal TProductPriceAvg()
+		{
+			return _productDapperRepository.ProductPriceAvg();
+		}
+
+		public decimal TProductAvgPriceByHamburger()
+		{
+			return _productDapperRepository.ProductAvgPriceByHamburger();
+		}
+
+		public void TUpdate(Product entity)
         {
             _productDal.Update(entity);
             _uowDal.Save();

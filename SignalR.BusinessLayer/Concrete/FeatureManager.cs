@@ -1,5 +1,6 @@
 ﻿using SignalR.BusinessLayer.Abstract;
 using SignalR.DataAccessLayer.Abstract;
+using SignalR.DataAccessLayer.Dapper.Abstract;
 using SignalR.DataAccessLayer.UnitOfWork;
 using SignalR.EntityLayer.Entities;
 using System;
@@ -14,6 +15,7 @@ namespace SignalR.BusinessLayer.Concrete
     {
         private readonly IFeatureDal _featureDal;
         private readonly IUoWDal _uowDal;
+        
 
         public FeatureManager(IFeatureDal featureDal, IUoWDal uowDal)
         {

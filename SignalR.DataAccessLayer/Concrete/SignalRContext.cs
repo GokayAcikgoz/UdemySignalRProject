@@ -2,6 +2,7 @@
 using SignalR.EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,24 @@ namespace SignalR.DataAccessLayer.Concrete
 {
     public class SignalRContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		private readonly IDbConnection _connection;
+
+		public SignalRContext(DbContextOptions<SignalRContext> options)
+			: base(options)
+		{
+			_connection = Database.GetDbConnection();
+		}
+
+		public SignalRContext()
+		{
+		}
+
+		public IDbConnection GetConnection()
+		{
+			return _connection;
+		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=GOKAYACIKGOZ; initial Catalog=SignalRDb; integrated security=true");
         }
@@ -24,5 +42,10 @@ namespace SignalR.DataAccessLayer.Concrete
         public DbSet<Product> Products { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<MoneyCase> MoneyCases { get; set; }
+        public DbSet<MenuTable> MenuTables { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
     }
 }
