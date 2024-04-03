@@ -14,7 +14,7 @@ namespace SignalRWebUI.ViewComponents.DefaultComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var values = await _consumeGenericMethod.GetConsume<List<ResultDiscountDto>>("http://localhost:7052/api/Discounts");
+            var values = await _consumeGenericMethod.GetConsume<List<ResultDiscountDto>>("http://localhost:7052/api/Discounts/GetListStatusToTrue");
             if (values != null)
             {
                 return View(values);

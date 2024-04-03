@@ -8,6 +8,7 @@ using SignalR.DataAccessLayer.EntityFramework;
 using SignalR.DataAccessLayer.UnitOfWork;
 using SignalRApi.Hubs;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,12 +61,23 @@ builder.Services.AddScoped<IMenuTableDal, EfMenuTableDal>();
 builder.Services.AddScoped<IMenuTableService, MenuTableManager>();
 builder.Services.AddScoped<ISliderDal, EfSliderDal>();
 builder.Services.AddScoped<ISliderService, SliderManager>();
+builder.Services.AddScoped<IBasketDal, EfBasketDal>();
+builder.Services.AddScoped<IBasketService, BasketManager>();
+builder.Services.AddScoped<INotificationDal, EfNotificationDal>();
+builder.Services.AddScoped<INotificationService, NotificationManager>();
+builder.Services.AddScoped<IMessageDal, EfMessageDal>();
+builder.Services.AddScoped<IMessageService, MessageManager>();
 
 builder.Services.AddScoped<ICategoryDapperRepository, CategoryDapperManager>();
 builder.Services.AddScoped<IProductDapperRepository, ProductDapperManager>();
 builder.Services.AddScoped<IOrderDapperRepository, OrderDapperManager>();
 builder.Services.AddScoped<IMoneyCaseDapperRepository, MoneyCaseDapperManager>();
 builder.Services.AddScoped<IMenuTableDapperRepository, MenuTableDapperManager>();
+builder.Services.AddScoped<INotificationDapperRepository, NotificationDapperManager>();
+
+
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

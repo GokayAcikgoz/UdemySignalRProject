@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SignalRWebUI.Core;
 using SignalRWebUI.Dtos.FeatureDtos;
+using SignalRWebUI.Dtos.SliderDtos;
 
 namespace SignalRWebUI.Controllers
 {
-	public class FeatureController : Controller
+	public class SliderController : Controller
 	{
 		private readonly IConsumeGenericMethod _consumeGenericMethod;
 
-		public FeatureController(IConsumeGenericMethod consumeGenericMethod)
+		public SliderController(IConsumeGenericMethod consumeGenericMethod)
 		{
 			_consumeGenericMethod = consumeGenericMethod;
 		}
@@ -24,7 +25,7 @@ namespace SignalRWebUI.Controllers
 			//}
 			//return View();
 
-			var values = await _consumeGenericMethod.GetConsume<List<ResultFeaturDto>>("http://localhost:7052/api/Features");
+			var values = await _consumeGenericMethod.GetConsume<List<ResultSliderDto>>("http://localhost:7052/api/Sliders");
 			if (values != null)
 			{
 				return View(values);
@@ -33,13 +34,13 @@ namespace SignalRWebUI.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult CreateFeature()
+		public IActionResult CreateSlider()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateFeature(CreateFeatureDto createFeatureDto)
+		public async Task<IActionResult> CreateSlider(CreateSliderDto createSliderDto)
 		{
 			//var client = _httpClientFactory.CreateClient();
 			//var jsonData = JsonConvert.SerializeObject(createAboutDto);
@@ -50,7 +51,7 @@ namespace SignalRWebUI.Controllers
 			//	return RedirectToAction("Index");
 			//}
 			//return View();
-			var value = await _consumeGenericMethod.CreateConsume("http://localhost:7052/api/Features", createFeatureDto);
+			var value = await _consumeGenericMethod.CreateConsume("http://localhost:7052/api/Sliders", createSliderDto);
 			if (value)
 			{
 				return RedirectToAction("Index");
@@ -58,7 +59,7 @@ namespace SignalRWebUI.Controllers
 			return View();
 		}
 
-		public async Task<IActionResult> DeleteFeature(int id)
+		public async Task<IActionResult> DeleteSlider(int id)
 		{
 			//var client = _httpClientFactory.CreateClient();
 			//var responseMessage = await client.DeleteAsync($"http://localhost:7052/api/Abouts/{id}");
@@ -67,7 +68,7 @@ namespace SignalRWebUI.Controllers
 			//	return RedirectToAction("Index");
 			//}
 			//return View();
-			var value = await _consumeGenericMethod.DeleteConsume("http://localhost:7052/api/Features", id);
+			var value = await _consumeGenericMethod.DeleteConsume("http://localhost:7052/api/Sliders", id);
 			if (value)
 			{
 				return RedirectToAction("Index");
@@ -76,7 +77,7 @@ namespace SignalRWebUI.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> UpdateFeature(int id)
+		public async Task<IActionResult> UpdateSlider(int id)
 		{
 			//var client = _httpClientFactory.CreateClient();
 			//var responseMessage = await client.GetAsync($"http://localhost:7052/api/Abouts/{id}");
@@ -87,7 +88,7 @@ namespace SignalRWebUI.Controllers
 			//	return View(values);
 			//}
 			//return View();
-			var values = await _consumeGenericMethod.GetConsume<UpdateFeatureDto>("http://localhost:7052/api/Features", id);
+			var values = await _consumeGenericMethod.GetConsume<UpdateFeatureDto>("http://localhost:7052/api/Sliders", id);
 			if (values != null)
 			{
 				return View(values);
@@ -96,7 +97,7 @@ namespace SignalRWebUI.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> UpdateFeature(UpdateFeatureDto updateFeatureDto)
+		public async Task<IActionResult> UpdateSlider(UpdateSliderDto updateSliderDto)
 		{
 			//var client = _httpClientFactory.CreateClient();
 			//var jsonData = JsonConvert.SerializeObject(updateAboutDto);
@@ -107,7 +108,7 @@ namespace SignalRWebUI.Controllers
 			//	return RedirectToAction("Index");
 			//}
 			//return View();
-			var values = await _consumeGenericMethod.UpdateConsume("http://localhost:7052/api/Features/", updateFeatureDto);
+			var values = await _consumeGenericMethod.UpdateConsume("http://localhost:7052/api/Sliders/", updateSliderDto);
 			if (values)
 			{
 				return RedirectToAction("Index");

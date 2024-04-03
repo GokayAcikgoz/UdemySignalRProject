@@ -11,17 +11,21 @@ namespace SignalRApi.Hubs
 		private readonly IOrderService _orderService;
 		private readonly IMoneyCaseService _moneyCaseService;
 		private readonly IMenuTableService _menuTableService;
+		private readonly IBookingService _bookingService;
+		private readonly INotificationService _notificationService;
 
-		public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IMenuTableService menuTableService)
-		{
-			_categoryService = categoryService;
-			_productService = productService;
-			_orderService = orderService;
-			_moneyCaseService = moneyCaseService;
-			_menuTableService = menuTableService;
-		}
-
-		public async Task SendCategoryCount()
+        public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IMenuTableService menuTableService, IBookingService bookingService, INotificationService notificationService)
+        {
+            _categoryService = categoryService;
+            _productService = productService;
+            _orderService = orderService;
+            _moneyCaseService = moneyCaseService;
+            _menuTableService = menuTableService;
+            _bookingService = bookingService;
+            _notificationService = notificationService;
+        }
+		public static int clientCount { get; set; } = 0;
+        public async Task SendCategoryCount()
 		{
 			var value = _categoryService.TCategoryCount();
 			await Clients.All.SendAsync("ReceiverCategoryCount", value);
@@ -131,8 +135,73 @@ namespace SignalRApi.Hubs
 
 		public async Task ProgressMenuTableCount()
 		{
-            var value3 = _menuTableService.TMenuTableCount();
-            await Clients.All.SendAsync("ReceiverMenuTableCount", value3);
+            var value4 = _menuTableService.TMenuTableCount();
+            await Clients.All.SendAsync("ReceiverMenuTableCount", value4);
         }
-	}
+
+
+        public async Task ProgressProductPriceAvg()
+        {
+            var value5 = _productService.TProductPriceAvg();
+            await Clients.All.SendAsync("ProgressProductPriceAvg", value5);
+        }
+
+        public async Task ProgressProductAvgPriceByHamburger()
+        {
+            var value6 = _productService.TProductAvgPriceByHamburger();
+            await Clients.All.SendAsync("ProgressProductAvgPriceByHamburger", value6);
+        }
+
+        public async Task ProgressProductCountByCategoryNameDrink()
+        {
+            var value7 = _productService.TProductCountByCategoryNameDrink();
+            await Clients.All.SendAsync("ProgressProductCountByCategoryNameDrink", value7);
+        }
+
+
+        public async Task GetBookingList()
+		{
+			var values = _bookingService.TGetListAll();
+            await Clients.All.SendAsync("ReceiverBookingList", values);
+        }
+
+		public async Task SendNotification()
+		{
+			var values = _notificationService.TNotificationCountByStatusFalse();
+            await Clients.All.SendAsync("ReceiverNotificationCountByStatusFalse", values);
+        }
+
+		public async Task GetAllNotificationByFalse()
+		{
+            var values = _notificationService.TGetAllNotificationByFalse();
+            await Clients.All.SendAsync("ReceiverGetAllNotificationByFalse", values);
+        }
+
+		public async Task GetMenuTableStatus()
+		{
+			var value = _menuTableService.TGetListAll();
+			await Clients.All.SendAsync("ReceiverGetMenuTableStatus", value);
+		}
+
+		public async Task SendMessage(string user, string message)
+		{
+			await Clients.All.SendAsync("ReceiveMessage",user,message);
+		}
+		
+		//clienta bağlı olan client sayısı
+        public override async Task OnConnectedAsync()
+        {
+            clientCount++;
+			await Clients.All.SendAsync("ReceiverClientCount", clientCount);
+			await base.OnConnectedAsync();
+        }
+
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            clientCount--;
+			await Clients.All.SendAsync("ReceiverClientCount", clientCount);
+			await base.OnDisconnectedAsync(exception);
+        }
+
+    }
 }

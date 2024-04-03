@@ -14,7 +14,10 @@ namespace SignalRApi.Mapping
             CreateMap<Product, UpdateProductDto>().ReverseMap();
 
             //CategoryName özelliğini Product sınıfındaki Category nesnesinin CategoryName özelliğinden almasını söylüyoruz.
-            CreateMap<Product, ResultProductWithCategory>().ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName)).ReverseMap();
+            CreateMap<Product, ResultProductWithCategory>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
+                .ForMember(dest => dest.CategoryStatus, opt => opt.MapFrom(src => src.Category.CategoryStatus))
+                .ReverseMap();
 
         }
     }

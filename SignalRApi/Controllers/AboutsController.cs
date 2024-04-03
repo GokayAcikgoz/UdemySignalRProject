@@ -60,7 +60,7 @@ namespace SignalRApi.Controllers
             //    Title = updateAboutDto.Title,
             //};
             _aboutService.TUpdate(_mapper.Map<About>(updateAboutDto));
-            return Ok("Kategori Güncellendi");
+            return Ok("Hakkımda Güncellendi");
         }
 
         [HttpGet("{id}")]

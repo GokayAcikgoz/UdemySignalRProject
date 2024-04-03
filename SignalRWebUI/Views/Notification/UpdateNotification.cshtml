@@ -1,0 +1,42 @@
+﻿@model SignalRWebUI.Dtos.NotificationDtos.UpdateNotificationDto
+@{
+    ViewData["Title"] = "UpdateNotification";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+	<div class="container-fluid">
+		<h4 class="page-title">Bildirim İşlemleri</h4>
+		<div class="row">
+			<div class="col-md-12">
+				<form method="post">
+					<div class="card">
+						<div class="card-header">
+							<input type="hidden" asp-for="NotificationID"/>
+							<div class="card-title">Bildirim Güncelleme</div>
+						</div>
+						<div class="card-body">
+							<div class="form-group">
+								<label for="Type">Bildirim Türü</label>
+								<input type="text" class="form-control" id="Type" asp-for="Type">
+							</div>
+							<div class="form-group">
+								<label for="Icon">Bildirim İkonu</label>
+								<input type="text" class="form-control" id="Icon" asp-for="Icon">
+							</div>
+							<div class="form-group">
+								<label for="Description">Açıklama</label>
+								<input type="text" class="form-control" id="Description" asp-for="Description">
+							</div>
+						</div>
+						<div class="card-action">
+							<button class="btn btn-primary">Bildirimi Güncelle</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+

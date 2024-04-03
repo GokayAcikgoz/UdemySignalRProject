@@ -71,5 +71,19 @@ namespace SignalRWebUI.Controllers
 			}
 			return View();
 		}
+
+		public async Task<IActionResult> BookingStatusApproved(int id)
+		{
+			await _consumeGenericMethod.GetConsume<List<ResultBookingDto>>("http://localhost:7052/api/Bookings/BookingStatusApproved", id);
+
+			return RedirectToAction("Index");
+		}
+
+		public async Task<IActionResult> BookingStatusCancelled(int id)
+		{
+			await _consumeGenericMethod.GetConsume<List<ResultBookingDto>>("http://localhost:7052/api/Bookings/BookingStatusCancelled", id);
+
+			return RedirectToAction("Index");
+		}
 	}
 }

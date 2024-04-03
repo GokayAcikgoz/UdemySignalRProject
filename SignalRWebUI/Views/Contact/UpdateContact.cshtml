@@ -29,12 +29,28 @@
 								<input type="email" class="form-control" id="Mail" asp-for="Mail">
 							</div>
 							<div class="form-group">
+								<label for="FooterTitle">Alt Başlık</label>
+								<input type="text" class="form-control" id="FooterTitle" asp-for="FooterTitle">
+							</div>
+							<div class="form-group">
+								<label for="OpenDays">Açık Günler</label>
+								<input type="text" class="form-control" id="OpenDays" asp-for="OpenDays">
+							</div>
+							<div class="form-group">
+								<label for="OpenDaysDescription">Açık Günler Açıklama</label>
+								<input type="text" class="form-control" id="OpenDaysDescription" asp-for="OpenDaysDescription">
+							</div>
+							<div class="form-group">
+								<label for="OpenHours">Açık Saatler</label>
+								<input type="text" class="form-control" id="OpenHours" asp-for="OpenHours">
+							</div>
+							<div class="form-group">
 								<label for="FooterDescription">Açıklama Giriniz</label>
 								<textarea rows="5" class="form-control" id="FooterDescription" asp-for="FooterDescription"></textarea>
 							</div>
 						</div>
 						<div class="card-action">
-							<button class="btn btn-primary">İletişim Bilgisi Ekle</button>
+							<button class="btn btn-success">İletişim Bilgisi Güncelle</button>
 						</div>
 					</div>
 				</form>

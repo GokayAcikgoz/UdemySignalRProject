@@ -121,5 +121,22 @@ namespace SignalRWebUI.Controllers
 			}
 			return View();
 		}
-	}
+
+
+        public async Task<IActionResult> ChangeStatusToTrue(int id)
+        {
+
+            await _consumeGenericMethod.GetConsume<List<ResultDiscountDto>>("http://localhost:7052/api/Discounts/ChangeStatusToTrue", id);
+			return RedirectToAction("Index");
+
+        }
+
+        public async Task<IActionResult> ChangeStatusToFalse(int id)
+        {
+
+            await _consumeGenericMethod.GetConsume<List<ResultDiscountDto>>("http://localhost:7052/api/Discounts/ChangeStatusToTrue", id);
+            return RedirectToAction("Index");
+
+        }
+    }
 }
