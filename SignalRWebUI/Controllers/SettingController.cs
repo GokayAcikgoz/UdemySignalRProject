@@ -23,7 +23,7 @@ namespace SignalRWebUI.Controllers
 			userEditDto.Name = value.Name;
 			userEditDto.Username = value.UserName;
 			userEditDto.Mail = value.Email;
-			return View();
+			return View(userEditDto);
 		}
 
 

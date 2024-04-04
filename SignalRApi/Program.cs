@@ -1,3 +1,4 @@
+using Amazon.S3;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.BusinessLayer.Concrete;
 using SignalR.DataAccessLayer.Abstract;
@@ -24,6 +25,9 @@ builder.Services.AddCors(opt =>
 });
 
 builder.Services.AddSignalR();
+
+builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
+builder.Services.AddAWSService<IAmazonS3>();
 
 // Add services to the container.
 

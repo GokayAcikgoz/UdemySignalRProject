@@ -14,11 +14,13 @@ namespace SignalRApi.Controllers
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly FilesController _filesController;
 
-        public ProductsController(IProductService productService, IMapper mapper)
+        public ProductsController(IProductService productService, IMapper mapper, FilesController filesController)
         {
             _productService = productService;
             _mapper = mapper;
+            _filesController = filesController;
         }
 
         [HttpGet]
@@ -81,13 +83,6 @@ namespace SignalRApi.Controllers
 		[HttpPost]
         public IActionResult CreateProduct(CreateProductDto createProductDto)
         {
-            //_contactService.TAdd(new Contact()
-            //{
-            //    FooterDescription = createContactDto.FooterDescription,
-            //    Location = createContactDto.Location,
-            //    Mail = createContactDto.Mail,
-            //    Phone = createContactDto.Phone
-            //});
             _productService.TAdd(_mapper.Map<Product>(createProductDto));
             return Ok("Ürün bilgisi eklendi");
         }

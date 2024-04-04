@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,6 @@ namespace SignalR.DtoLayer.ProductDto
         public string ImageUrl { get; set; }
         public bool ProductStatus { get; set; }
         public int CategoryID { get; set; }
+        public IFormFile ImageFile { get; set; }
     }
 }
