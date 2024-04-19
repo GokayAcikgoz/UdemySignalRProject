@@ -7,6 +7,7 @@ using SignalR.DataAccessLayer.Dapper.Abstract;
 using SignalR.DataAccessLayer.Dapper.Concrete;
 using SignalR.DataAccessLayer.EntityFramework;
 using SignalR.DataAccessLayer.UnitOfWork;
+using SignalRApi.Controllers;
 using SignalRApi.Hubs;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -78,6 +79,8 @@ builder.Services.AddScoped<IOrderDapperRepository, OrderDapperManager>();
 builder.Services.AddScoped<IMoneyCaseDapperRepository, MoneyCaseDapperManager>();
 builder.Services.AddScoped<IMenuTableDapperRepository, MenuTableDapperManager>();
 builder.Services.AddScoped<INotificationDapperRepository, NotificationDapperManager>();
+
+builder.Services.AddScoped<FilesController>();
 
 
 builder.Services.AddControllersWithViews()

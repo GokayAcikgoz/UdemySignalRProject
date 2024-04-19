@@ -1,4 +1,5 @@
-﻿using SignalR.BusinessLayer.Abstract;
+﻿using Microsoft.AspNetCore.Http;
+using SignalR.BusinessLayer.Abstract;
 using SignalR.DataAccessLayer.Abstract;
 using SignalR.DataAccessLayer.Dapper.Abstract;
 using SignalR.DataAccessLayer.UnitOfWork;
@@ -17,14 +18,14 @@ namespace SignalR.BusinessLayer.Concrete
         private readonly IUoWDal _uowDal;
         private readonly IProductDapperRepository _productDapperRepository;
 
-		public ProductManager(IProductDal productDal, IUoWDal uowDal, IProductDapperRepository productDapperRepository)
-		{
-			_productDal = productDal;
-			_uowDal = uowDal;
-			_productDapperRepository = productDapperRepository;
-		}
+        public ProductManager(IProductDal productDal, IUoWDal uowDal, IProductDapperRepository productDapperRepository)
+        {
+            _productDal = productDal;
+            _uowDal = uowDal;
+            _productDapperRepository = productDapperRepository;
+        }
 
-		public void TAdd(Product entity)
+        public void TAdd(Product entity)
         {
             _productDal.Add(entity);
             _uowDal.Save();

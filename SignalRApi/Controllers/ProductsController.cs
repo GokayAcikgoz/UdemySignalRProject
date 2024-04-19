@@ -81,11 +81,34 @@ namespace SignalRApi.Controllers
 		}
 
 		[HttpPost]
-        public IActionResult CreateProduct(CreateProductDto createProductDto)
+        public async Task<IActionResult> CreateProduct([FromForm] CreateProductDto createProductDto)
         {
-            _productService.TAdd(_mapper.Map<Product>(createProductDto));
-            return Ok("Ürün bilgisi eklendi");
-        }
+
+			if (createProductDto.ImageFile != null && createProductDto.ImageFile.Length > 0)
+			{
+				var s3Result = await _filesController.UploadFileAsync(createProductDto.ImageFile, "signalrudemy-bucket", null);
+
+				if (s3Result is OkObjectResult okResult)
+				{
+					string imageUrl = okResult.Value as string;
+					if (!string.IsNullOrEmpty(imageUrl))
+					{
+						var product = _mapper.Map<Product>(createProductDto);
+						product.ImageUrl = imageUrl;
+
+						_productService.TAdd(product);
+
+
+						return Ok("Ürün Eklendi");
+					}
+				}
+				return BadRequest("Resim yükleme sırasında bir hata oluştu.");
+			}
+			return BadRequest("Lütfen bir resim dosyası seçin.");
+
+			//_productService.TAdd(_mapper.Map<Product>(createProductDto));
+			//return Ok("Ürün bilgisi eklendi");
+		}
 
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)

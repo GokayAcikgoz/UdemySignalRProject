@@ -4,8 +4,10 @@ using Newtonsoft.Json;
 using SignalRWebUI.Core;
 using SignalRWebUI.Dtos.CategoryDtos;
 using SignalRWebUI.Dtos.ProductDtos;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Unicode;
+using ThirdParty.Json.LitJson;
 
 namespace SignalRWebUI.Controllers
 {
@@ -56,14 +58,14 @@ namespace SignalRWebUI.Controllers
 														  Text = x.CategoryName,
 														  Value = x.CategoryID.ToString()
 													  }).ToList();
-				ViewBag.categoryItems = categoryItems;				
+				ViewBag.categoryItems = categoryItems;
 			}
 
 			return View();
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto)
+		public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto, IFormFile ImageUrl)
 		{
 			createProductDto.ProductStatus = true;
 
@@ -76,12 +78,84 @@ namespace SignalRWebUI.Controllers
 			//	return RedirectToAction("Index");
 			//}
 			//return View();
-			var values = await _consumeGenericMethod.CreateConsume("http://localhost:7052/api/Products", createProductDto);
-			if (values)
+
+
+
+
+			//var values = await _consumeGenericMethod.CreateConsume("http://localhost:7052/api/Products", createProductDto);
+			//if (values)
+			//{
+			//	return RedirectToAction("Index");
+			//}
+			//return View();
+
+
+			using (var httpClient = _httpClientFactory.CreateClient())
 			{
-				return RedirectToAction("Index");
+				var content = new MultipartFormDataContent();
+				content.Add(new StringContent(createProductDto.ProductName), "ProductName");
+				content.Add(new StringContent(createProductDto.Price.ToString()), "Price");
+				content.Add(new StringContent(createProductDto.CategoryID.ToString()), "CategoryID");
+				content.Add(new StringContent(createProductDto.Description), "Description");
+				content.Add(new StringContent(createProductDto.ProductStatus.ToString()), "ProductStatus");
+
+				// Resim dosyasını ekleyin
+				if (ImageUrl != null && ImageUrl.Length > 0)
+				{
+					var fileStream = ImageUrl.OpenReadStream();
+					var fileContent = new StreamContent(fileStream);
+					fileContent.Headers.ContentType = new MediaTypeHeaderValue(ImageUrl.ContentType);
+					content.Add(fileContent, "ImageUrl", ImageUrl.FileName);
+				}
+
+				var response = await httpClient.PostAsync("http://localhost:7052/api/Products", content);
+				if (response.IsSuccessStatusCode)
+				{
+					return RedirectToAction("Index");
+				}
 			}
+
 			return View();
+
+
+
+			// HTTP istemcisi oluşturma
+			//using (var httpClient = _httpClientFactory.CreateClient())
+			//{
+			//    // Form verilerini ve dosya yüklemeyi içeren içerik oluşturma
+			//    var content = new MultipartFormDataContent();
+			//    content.Add(new StringContent(createProductDto.ProductName), "ProductName");
+			//    content.Add(new StringContent(createProductDto.Description), "Description");
+			//    content.Add(new StringContent(createProductDto.Price.ToString()), "Price");
+			//    content.Add(new StringContent(createProductDto.CategoryID.ToString()), "CategoryID");
+
+			//    // Resim dosyasını ekleme
+			//    if (imageFile != null && imageFile.Length > 0)
+			//    {
+			//        using (var fileStream = imageFile.OpenReadStream())
+			//        {
+			//            var fileContent = new StreamContent(fileStream);
+			//            fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
+			//            content.Add(fileContent, "imageFile", imageFile.FileName);
+			//        }
+			//    }
+
+			//    // İsteği gönderme
+			//    var response = await httpClient.PostAsync("http://localhost:7052/api/Products", content);
+
+			//    // Yanıt kontrolü
+			//    if (response.IsSuccessStatusCode)
+			//    {
+			//        return RedirectToAction("Index");
+			//    }
+			//    else
+			//    {
+			//        // Yanıt kodu başarısızsa hata mesajını günlüğe yazdırabilirsiniz
+			//        Console.WriteLine($"Error: {response.StatusCode}");
+			//        return View();
+			//    }
+			//}
+
 		}
 
 		public async Task<IActionResult> DeleteProduct(int id)

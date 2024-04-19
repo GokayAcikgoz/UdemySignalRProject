@@ -2,7 +2,10 @@
 using Amazon.S3.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using SignalR.BusinessLayer.Concrete;
 using SignalR.DtoLayer.AWSDto;
+using SignalR.EntityLayer.Entities;
 
 namespace SignalRApi.Controllers
 {
@@ -25,16 +28,23 @@ namespace SignalRApi.Controllers
             {
                 return NotFound($"Bucket {bucketName} does not exist.");
             }
-            PutObjectRequest request = new()
+            string key = String.IsNullOrEmpty(prefix) ? file.FileName : $"{prefix?.TrimEnd('/')}/{file.FileName}";
+			PutObjectRequest request = new()
             {
                 BucketName = bucketName,
-                Key = String.IsNullOrEmpty(prefix) ? file.FileName : $"{prefix?.TrimEnd('/')}/{file.FileName}",
+                Key = key,
                 InputStream = file.OpenReadStream()
             };
             request.Metadata.Add("Content-Type", file.ContentType);
-            await _amazonS3.PutObjectAsync(request);
-            return Ok($"File {prefix}/{file.FileName} uploaded to S3 successfully!");
-        }
+			await _amazonS3.PutObjectAsync(request);
+
+			string fileUrl = $"https://{bucketName}.s3.amazonaws.com/{key}";
+
+			// Başarıyla yüklenen dosyanın URL'sini döndürün
+			return Ok(fileUrl);
+
+			//return Ok($"File {prefix}/{file.FileName} uploaded to S3 successfully!");
+		}
 
         [HttpGet]
         public async Task<IActionResult> GetAllFileAsync(string bucketName, string? prefix)
