@@ -29,3 +29,22 @@ Proje, temiz bir kod yapılandırmasına ve modüler bir mimariye sahiptir. N-ti
 SignalR kütüphanesi, gerçek zamanlı iletişim ve bildirim işlevselliğini sağlar. AWS S3 Bucket, medya dosyalarını depolamak ve sunmak için kullanılır.
 
 
+## Proje Görselleri
+![image](https://github.com/GokayAcikgoz/UdemySignalRProject/assets/57223178/71f26288-3f3b-4bb5-aaf1-f1841d7a8bc8)
+
+![image](https://github.com/GokayAcikgoz/UdemySignalRProject/assets/57223178/d4c9f68f-43d2-4561-8411-dbbf8008de71)
+
+![image](https://github.com/GokayAcikgoz/UdemySignalRProject/assets/57223178/79765206-1a22-44fa-a21f-39cd1545004a)
+
+![image](https://github.com/GokayAcikgoz/UdemySignalRProject/assets/57223178/4a25cb12-82c4-4546-9f5a-91cf21d80f1c)
+
+![image](https://github.com/GokayAcikgoz/UdemySignalRProject/assets/57223178/54dbd25e-4be4-45a0-8e21-f977a80281e2)
+
+
+
+https://github.com/GokayAcikgoz/UdemySignalRProject/assets/57223178/58819bcc-43ae-46c5-8e69-d01b1b323c7d
+
+
+
+
+
