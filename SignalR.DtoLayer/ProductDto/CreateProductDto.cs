@@ -17,6 +17,6 @@ namespace SignalR.DtoLayer.ProductDto
         public int CategoryID { get; set; }
 		//public IFormFile ImageUrl { get; set; }
 
-		public IFormFile ImageFile { get; set; }  // Kullanıcıdan dosya seçmek için IFormFile
+		public IFormFile ImageUrl { get; set; }  // Kullanıcıdan dosya seçmek için IFormFile
 	}
 }

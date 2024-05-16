@@ -84,9 +84,9 @@ namespace SignalRApi.Controllers
         public async Task<IActionResult> CreateProduct([FromForm] CreateProductDto createProductDto)
         {
 
-			if (createProductDto.ImageFile != null && createProductDto.ImageFile.Length > 0)
+			if (createProductDto.ImageUrl != null && createProductDto.ImageUrl.Length > 0)
 			{
-				var s3Result = await _filesController.UploadFileAsync(createProductDto.ImageFile, "signalrudemy-bucket", null);
+				var s3Result = await _filesController.UploadFileAsync(createProductDto.ImageUrl, "signalrudemy-bucket", null);
 
 				if (s3Result is OkObjectResult okResult)
 				{
